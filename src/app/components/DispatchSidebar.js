@@ -29,10 +29,10 @@ const DispatchSidebar = () => {
             <Sidebar.Nav.Section.Title>Management</Sidebar.Nav.Section.Title>
             <Sidebar.Nav.Section.Item
               // icon={<Briefcase />}
-              label="Clients"
+              label="Stations"
               href="#"
             />
-            <Sidebar.Nav.Section.Item
+            {/* <Sidebar.Nav.Section.Item
               // icon={<Users />}
               label="Users"
               as="button"
@@ -54,8 +54,8 @@ const DispatchSidebar = () => {
                   href="#"
                 />
               </Sidebar.Nav.Section>
-            </Sidebar.Nav.Section.Item>
-            <Sidebar.Nav.Section.Item
+            </Sidebar.Nav.Section.Item> */}
+            {/* <Sidebar.Nav.Section.Item
               // icon={<Shield />}
               label="Roles"
               href="#"
@@ -69,27 +69,23 @@ const DispatchSidebar = () => {
               // icon={<Sliders />}
               label="Settings"
               href="#"
-            />
+            /> */}
           </Sidebar.Nav.Section>
 
           <Sidebar.Nav.Section>
-            <Sidebar.Nav.Section.Title>Support</Sidebar.Nav.Section.Title>
+            {/* <Sidebar.Nav.Section.Title>Support</Sidebar.Nav.Section.Title>
             <Sidebar.Nav.Section.Item
               // icon={<LifeRing />}
               label="Contact"
               href="#"
-            />
-            <Sidebar.Nav.Section.Item
+            /> */}
+            {/* <Sidebar.Nav.Section.Item
               // icon={<EnvelopeOpen />}
               label="Tickets"
               href="#"
-            />
+            /> */}
             <Sidebar.Separator />
-            <Sidebar.Nav.Section.Item
-              // icon={<Book />}
-              label="Documentation"
-              href="#"
-            />
+            <Sidebar.Nav.Section.Item label="Settings" href="#" />
           </Sidebar.Nav.Section>
         </Sidebar.Nav>
 
