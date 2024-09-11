@@ -3,6 +3,9 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@rewind-ui/core/dist/theme/styles/*.js",
+    "./node_modules/@rewind-ui/core/dist/theme/styles/Button.styles.js",
+    "./node_modules/@rewind-ui/core/dist/theme/styles/Text.styles.js",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -14,5 +17,11 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require("@tailwindcss/typography"),
+    require("tailwind-scrollbar")({ nocompatible: true }),
+    require("@tailwindcss/forms")({
+      strategy: "class", // only generate classes
+    }),
+  ],
 };
