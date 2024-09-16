@@ -25,7 +25,7 @@ const DispatchSidebar = () => {
     const q = query(
       collection(firebaseServices.firestoreDB, "emergency_requests"),
       where("status", "==", 0),
-      orderBy("created_on", "desc") // Order by creation time (descending)
+      orderBy("created_on", "asc") // Order by creation time (descending)
     );
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const emergencies = [];
