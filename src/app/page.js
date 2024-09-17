@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { ref, onValue } from "firebase/database";
+import firebaseServices from "../../firebase";
 
 import { useState, useEffect, useMemo } from "react";
 import DispatchSidebar from "@/app/components/DispatchSidebar";
@@ -17,21 +17,7 @@ export default function Home() {
     });
   }, []);
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCNC25NOsP46KRwY_IlknebYCRaLJU-QBg",
-    authDomain: "mock-capstone-project.firebaseapp.com",
-    databaseURL:
-      "https://mock-capstone-project-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "mock-capstone-project",
-    storageBucket: "mock-capstone-project.appspot.com",
-    messagingSenderId: "601362887412",
-    appId: "1:601362887412:web:92a292cdd37a783fe3a4a1",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  const locationsRef = ref(db, "location");
+  const locationsRef = ref(firebaseServices.db, "location");
 
   const [markers, setMarkers] = useState([]);
 
@@ -52,8 +38,6 @@ export default function Home() {
           </>
         );
       });
-      console.log(location.latitude);
-      console.log(Object.values(locationData));
 
       setMarkers(newMarkers);
     });
