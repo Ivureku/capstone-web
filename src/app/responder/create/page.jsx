@@ -53,6 +53,7 @@ export default function CreateResponderPage() {
         userId
       );
 
+      // write data to firestore
       await setDoc(responderRef, responderData);
     } catch (error) {
       alert("Failed to upload responder data");
@@ -62,7 +63,11 @@ export default function CreateResponderPage() {
 
   // TODO: improve UI design
   return (
-    <form action={onFormSubmit} className="flex flex-col w-fit text-sky-700">
+    <form
+      id="create-responder-form"
+      action={onFormSubmit}
+      className="flex flex-col w-fit text-sky-700"
+    >
       <input
         type="text"
         name="vehicle_id"
@@ -70,13 +75,23 @@ export default function CreateResponderPage() {
         required
         placeholder="Vehicle ID (ex: ABC 1234)"
       />
-      <input
+      <select
+        name="vehicle_type"
+        id="vehicle_type"
+        form="create-responder-form"
+        required
+      >
+        <option value="fire truck">Fire Truck</option>
+        <option value="ambulance">Ambulance</option>
+        <option value="usar vehicle">Search and Rescue Vehicle</option>
+      </select>
+      {/* <input
         type="text"
         name="vehicle_type"
         id="vehicle_type"
         required
         placeholder="Vehicle Type"
-      />
+      /> */}
 
       <input
         type="text"
