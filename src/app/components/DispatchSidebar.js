@@ -21,28 +21,31 @@ const DispatchSidebar = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeEmergencies, setActiveEmergencies] = useState([]);
 
-  useEffect(() => {
-    const q = query(
-      collection(firebaseServices.firestoreDB, "emergency_requests"),
-      where("status", "==", 0),
-      orderBy("created_on", "asc") // Order by creation time (descending)
-    );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const emergencies = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        emergencies.push({
-          callerName: data.caller.name,
-          contact: data.caller.contact,
-          details: data.details,
-          reason: data.reason,
-          address: data.location.address,
-        });
-      });
-      setActiveEmergencies(emergencies);
-    });
+  const q = query(
+    collection(firebaseServices.firestoreDB, "emergency_requests"),
+    where("status", "==", 0),
+    orderBy("created_on", "asc") // Order by creation time (descending)
+  );
 
-    // return () => unsubscribe(); // Cleanup function to detach listener on unmount
+  // TODO: test if improves perfomance
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const emergencies = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      emergencies.push({
+        callerName: data.caller.name,
+        contact: data.caller.contact,
+        details: data.details,
+        reason: data.reason,
+        address: data.location.address,
+      });
+    });
+    setActiveEmergencies(emergencies);
+  });
+
+  useEffect(() => {
+    // detaches listener on unmount
+    return () => unsubscribe();
   }, []);
 
   return (
