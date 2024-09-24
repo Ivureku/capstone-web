@@ -1,22 +1,22 @@
-import React from "react";
-import { Sidebar, Drawer, Button, Card, Badge, Modal } from "@rewind-ui/core";
-import { Emergencies } from "../icons/Emergencies.js";
 import { SvgIcon } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Badge, Button, Card, Drawer, Modal, Sidebar } from "@rewind-ui/core";
+import { useEffect, useState } from "react";
 
-import firebaseServices from "../../../firebase.js";
 import {
   collection,
-  query,
-  where,
   onSnapshot,
   orderBy,
+  query,
+  where,
 } from "firebase/firestore";
+import firebaseServices from "../../../firebase.js";
 
 const DispatchSidebar = () => {
+  // TODO: cleanup
   // const [expanded, setExpanded] = useState(true);
   // const [mobile, setMobile] = useState(false);
   // const sidebar = useSidebar();
+
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeEmergencies, setActiveEmergencies] = useState([]);
@@ -103,16 +103,15 @@ const DispatchSidebar = () => {
                     </g>
                   </svg>
                 </SvgIcon>
-                Emergencies
+                Pending Requests
               </Button>
             </Sidebar.Nav.Section>
 
             <Sidebar.Nav.Section>
               <Sidebar.Nav.Section.Title>Management</Sidebar.Nav.Section.Title>
               <Sidebar.Nav.Section.Item
-                // icon={<Briefcase />}
-                label="Stations"
-                href="#"
+                label="Create Responder Account"
+                href="/responder/create"
               />
             </Sidebar.Nav.Section>
 
