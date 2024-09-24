@@ -9,13 +9,17 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import firebaseServices from "../../../firebase.js";
 
+// TODO: figure out why useRouter doesn't work
 const DispatchSidebar = () => {
   // TODO: cleanup
   // const [expanded, setExpanded] = useState(true);
   // const [mobile, setMobile] = useState(false);
   // const sidebar = useSidebar();
+
+  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -33,6 +37,7 @@ const DispatchSidebar = () => {
     querySnapshot.forEach((doc) => {
       const data = doc.data();
       emergencies.push({
+        id: doc.id,
         callerName: data.caller.name,
         contact: data.caller.contact,
         details: data.details,
@@ -190,9 +195,15 @@ const DispatchSidebar = () => {
               <p>Details: {emergency.details}</p>
             </Card.Body>
             <Card.Footer className="flex justify-items-end">
-              <Button color="green" shadow="base">
-                Assign
-              </Button>
+              <a href={`/assign?request=${emergency.id}`}>
+                <Button
+                  color="green"
+                  shadow="base"
+                  // onClick={() => router.push(`/assign?request=${emergency.id}`)}
+                >
+                  Assign
+                </Button>
+              </a>
             </Card.Footer>
           </Card>
         </Modal>
