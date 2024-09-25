@@ -10,6 +10,10 @@ export default async function AsyncResponderMultiSelect({ nameId }) {
 
   const availableResponders = (await getDocs(respondersQuery)).docs;
 
+  if (availableResponders.length < 1) {
+    return <p>No available responder</p>;
+  }
+
   return (
     <div>
       <label
