@@ -5,6 +5,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import firebaseServices from "../../../../firebase";
 
+import { Input, Select, Button, Modal } from "@rewind-ui/core";
+
 export default function CreateResponderPage() {
   const router = useRouter();
 
@@ -68,14 +70,24 @@ export default function CreateResponderPage() {
       action={onFormSubmit}
       className="flex flex-col w-fit text-sky-700"
     >
-      <input
+      {/* <input
         type="text"
         name="vehicle_id"
         id="vehicle_id"
         required
         placeholder="Vehicle ID (ex: ABC 1234)"
+      /> */}
+      <Input
+        name="vehicle_id"
+        id="vehicle_id"
+        shadow="sm"
+        tone="solid"
+        radius="sm"
+        withRing={false}
+        required
+        placeholder="Vehicle ID (ex: ABC 1234)"
       />
-      <select
+      {/* <select
         name="vehicle_type"
         id="vehicle_type"
         form="create-responder-form"
@@ -84,7 +96,19 @@ export default function CreateResponderPage() {
         <option value="fire truck">Fire Truck</option>
         <option value="ambulance">Ambulance</option>
         <option value="usar vehicle">Search and Rescue Vehicle</option>
-      </select>
+      </select> */}
+      <Select
+        shadow="sm"
+        tone="solid"
+        name="vehicle_type"
+        id="vehicle_type"
+        radius="sm"
+        withRing={false}
+      >
+        <option value="fire truck">Fire Truck</option>
+        <option value="ambulance">Ambulance</option>
+        <option value="usar vehicle">Search and Rescue Vehicle</option>
+      </Select>
       {/* <input
         type="text"
         name="vehicle_type"
@@ -92,29 +116,66 @@ export default function CreateResponderPage() {
         required
         placeholder="Vehicle Type"
       /> */}
-
-      <input
+      {/* <input
         type="text"
         name="account_email"
         id="account_email"
         required
         placeholder="Account E-mail"
+      /> */}
+      <Input
+        placeholder="Account E-mail"
+        name="account_email"
+        id="account_email"
+        shadow="sm"
+        tone="solid"
+        radius="sm"
+        withRing={false}
+        required
       />
-      <input
+      {/* <input
         type="text"
         name="account_password"
         id="account_password"
         required
         placeholder="Account Password"
+      /> */}
+      <Input
+        placeholder="Account Password"
+        name="account_password"
+        id="account_password"
+        shadow="sm"
+        tone="solid"
+        radius="sm"
+        withRing={false}
+        required
       />
-      <input
+      {/* <input
         type="text"
         name="confirm_password"
         id="confirm_password"
         required
         placeholder="Confirm Password"
+      /> */}
+      <Input
+        placeholder="Confirm Password"
+        name="confirm_password"
+        id="confirm_password"
+        shadow="sm"
+        tone="solid"
+        radius="sm"
+        withRing={false}
+        required
       />
-      <button type="submit">Submit</button>
+      <Button
+        color="green"
+        shadow="base"
+        withRing={false}
+        type="submit"
+        radius="md"
+      >
+        Click me!
+      </Button>
     </form>
   );
 }
