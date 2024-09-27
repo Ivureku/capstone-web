@@ -1,13 +1,13 @@
 "use client";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-import { ref, onValue } from "firebase/database";
+import { onValue, ref } from "firebase/database";
 import firebaseServices from "../../firebase";
 
-import { useState, useEffect, useMemo } from "react";
 import DispatchSidebar from "@/app/components/DispatchSidebar";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const customIcon = useMemo(() => {
@@ -52,11 +52,11 @@ export default function Home() {
           url="https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=V6Shnt0Sho66RfMGK8ib"
         />
 
-        <Marker position={[7.0736, 125.611]} icon={customIcon}>
+        {/* <Marker position={[7.0736, 125.611]} icon={customIcon}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
-        </Marker>
+        </Marker> */}
         {markers}
       </MapContainer>
     </>

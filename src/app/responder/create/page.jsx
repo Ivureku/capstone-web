@@ -7,7 +7,6 @@ import firebaseServices from "../../../../firebase";
 
 import { Button, Input, Select } from "@rewind-ui/core";
 
-// TODO: add/improve UI design
 export default function CreateResponderPage() {
   const router = useRouter();
 
@@ -64,7 +63,6 @@ export default function CreateResponderPage() {
     }
   }
 
-  // TODO: improve UI design
   return (
     <form
       id="create-responder-form"

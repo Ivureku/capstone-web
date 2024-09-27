@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import firebaseServices from "../../../firebase.js";
 
-// TODO: figure out why useRouter doesn't work
+// FIXME: useRouter no workie
 const DispatchSidebar = () => {
   // TODO: cleanup
   // const [expanded, setExpanded] = useState(true);
@@ -31,7 +31,7 @@ const DispatchSidebar = () => {
     orderBy("created_on", "asc") // Order by creation time (descending)
   );
 
-  // TODO: test if improves perfomance
+  // FIXME: Still causes crashes/freezes after a while
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     const emergencies = [];
     querySnapshot.forEach((doc) => {
