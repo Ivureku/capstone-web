@@ -9,40 +9,48 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import firebaseServices from "../../../firebase.js";
 
+// FIXME: useRouter no workie
 const DispatchSidebar = () => {
   // TODO: cleanup
   // const [expanded, setExpanded] = useState(true);
   // const [mobile, setMobile] = useState(false);
   // const sidebar = useSidebar();
 
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [activeEmergencies, setActiveEmergencies] = useState([]);
 
-  useEffect(() => {
-    const q = query(
-      collection(firebaseServices.firestoreDB, "emergency_requests"),
-      where("status", "==", 0),
-      orderBy("created_on", "asc") // Order by creation time (descending)
-    );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const emergencies = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        emergencies.push({
-          callerName: data.caller.name,
-          contact: data.caller.contact,
-          details: data.details,
-          reason: data.reason,
-          address: data.location.address,
-        });
-      });
-      setActiveEmergencies(emergencies);
-    });
+  const q = query(
+    collection(firebaseServices.firestoreDB, "emergency_requests"),
+    where("status", "==", 0),
+    orderBy("created_on", "asc") // Order by creation time (descending)
+  );
 
-    // return () => unsubscribe(); // Cleanup function to detach listener on unmount
+  // FIXME: Still causes crashes/freezes after a while
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const emergencies = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      emergencies.push({
+        id: doc.id,
+        callerName: data.caller.name,
+        contact: data.caller.contact,
+        details: data.details,
+        reason: data.reason,
+        address: data.location.address,
+      });
+    });
+    setActiveEmergencies(emergencies);
+  });
+
+  useEffect(() => {
+    // detaches listener on unmount
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -187,9 +195,15 @@ const DispatchSidebar = () => {
               <p>Details: {emergency.details}</p>
             </Card.Body>
             <Card.Footer className="flex justify-items-end">
-              <Button color="green" shadow="base">
-                Assign
-              </Button>
+              <a href={`/assign?request=${emergency.id}`}>
+                <Button
+                  color="green"
+                  shadow="base"
+                  // onClick={() => router.push(`/assign?request=${emergency.id}`)}
+                >
+                  Assign
+                </Button>
+              </a>
             </Card.Footer>
           </Card>
         </Modal>

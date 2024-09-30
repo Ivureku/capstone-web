@@ -5,7 +5,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import firebaseServices from "../../../../firebase";
 
-import { Input, Select, Button, Modal } from "@rewind-ui/core";
+import { Button, Input, Select } from "@rewind-ui/core";
 
 export default function CreateResponderPage() {
   const router = useRouter();
@@ -63,7 +63,6 @@ export default function CreateResponderPage() {
     }
   }
 
-  // TODO: improve UI design
   return (
     <form
       id="create-responder-form"
