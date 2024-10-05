@@ -39,45 +39,44 @@ const DispatchSidebar = () => {
     orderBy("created_on", "asc")
   ); // Snapshot listener for pending emergencies
 
-  useEffect(() => {
-    const unsubscribe = onSnapshot(pendingQ, (querySnapshot) => {
-      const pendingEntries = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        pendingEntries.push({
-          id: doc.id,
-          callerName: data.caller.name,
-          contact: data.caller.contact,
-          details: data.details,
-          reason: data.reason,
-          address: data.location.address,
-        });
+  const unsubPending = onSnapshot(pendingQ, (querySnapshot) => {
+    const pendingEntries = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      pendingEntries.push({
+        id: doc.id,
+        callerName: data.caller.name,
+        contact: data.caller.contact,
+        details: data.details,
+        reason: data.reason,
+        address: data.location.address,
       });
-      setPendingEmergencies(pendingEntries);
     });
+    setPendingEmergencies(pendingEntries);
+  });
 
-    return () => unsubscribe();
-  }, [pendingQ]); // Include pendingQ as a dependency
-
-  useEffect(() => {
-    const unsubscribe = onSnapshot(activeQ, (querySnapshot) => {
-      const activeEntries = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        activeEntries.push({
-          id: doc.id,
-          callerName: data.caller.name,
-          contact: data.caller.contact,
-          details: data.details,
-          reason: data.reason,
-          address: data.location.address,
-        });
+  const unsubActive = onSnapshot(activeQ, (querySnapshot) => {
+    const activeEntries = [];
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      activeEntries.push({
+        id: doc.id,
+        callerName: data.caller.name,
+        contact: data.caller.contact,
+        details: data.details,
+        reason: data.reason,
+        address: data.location.address,
       });
-      setActiveEmergencies(activeEntries);
     });
+    setActiveEmergencies(activeEntries);
+  });
 
-    return () => unsubscribe();
-  }, [activeQ]); // Function to handle opening the Drawer and setting the emergency type
+  // useEffect(() => {
+  //   return () => unsubPending();
+  // }, []);
+  // useEffect(() => {
+  //   return () => unsubActive();
+  // }, []);
 
   const handleOpenDrawer = (type) => {
     setSelectedEmergencyType(type);

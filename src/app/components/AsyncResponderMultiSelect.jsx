@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import firebaseServices from "../../../firebase";
+import { Select } from "@rewind-ui/core";
 
 export default async function AsyncResponderMultiSelect({ nameId }) {
   const respondersQuery = query(
@@ -21,7 +22,14 @@ export default async function AsyncResponderMultiSelect({ nameId }) {
         className="font-extralight italic flex flex-col gap-1 w-fit"
       >
         note: [shift + left click] in order to select more than one option
-        <select name={nameId} id={nameId} multiple className="text-black">
+        <Select
+          radius="base"
+          withRing={false}
+          name={nameId}
+          id={nameId}
+          multiple
+          className="text-black"
+        >
           {availableResponders.map((responder, index) => {
             const id = responder.id;
             const vehicle_id = responder.get("vehicle_id");
@@ -40,7 +48,7 @@ export default async function AsyncResponderMultiSelect({ nameId }) {
               </option>
             );
           })}
-        </select>
+        </Select>
       </label>
     </div>
   );

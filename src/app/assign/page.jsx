@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import firebaseServices from "../../../firebase";
 import AsyncResponderMultiSelect from "../components/AsyncResponderMultiSelect";
 import RequestDetailsCard from "../components/RequestDetailsCard";
+import { Button } from "@rewind-ui/core";
 
 export default function AssignResponderPage() {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function AssignResponderPage() {
 
   // FIXME: fix page stopping if pressing the submit button too early after page load
   return (
-    <div className="flex flex-col gap-7">
+    <div className="flex flex-col gap-7 items-center justify-center h-[50vh] mt-10">
       <Suspense fallback={<p>Loading...</p>}>
         <RequestDetailsCard requestId={requestId} />
       </Suspense>
@@ -88,7 +89,9 @@ export default function AssignResponderPage() {
       <Suspense fallback={<p>Searching for available responders...</p>}>
         <form action={onFormSubmit}>
           <AsyncResponderMultiSelect nameId="selected_responders" />
-          <button type="submit">Submit</button>
+          <Button className="mt-2 " type="submit">
+            Submit
+          </Button>
         </form>
       </Suspense>
     </div>
