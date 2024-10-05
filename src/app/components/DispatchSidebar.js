@@ -23,7 +23,7 @@ const DispatchSidebar = () => {
   const [pendingEmergencies, setPendingEmergencies] = useState([]);
   const [activeEmergencies, setActiveEmergencies] = useState([]);
   const [selectedEmergencyType, setSelectedEmergencyType] = useState("pending"); // new state
-  const [selectedEmergency, setSelectedEmergency] = useState(null);
+  const [selectedEmergency, setSelectedEmergency] = useState({});
   // Firestore query for pending emergencies
 
   const pendingQ = query(
