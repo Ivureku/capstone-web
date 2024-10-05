@@ -21,8 +21,9 @@ export default function Home() {
 
   const [markers, setMarkers] = useState([]);
 
+  // TODO: monitor firestore/RTDB reads
   useEffect(() => {
-    onValue(locationsRef, (snapshot) => {
+    const unsub = onValue(locationsRef, (snapshot) => {
       const locationData = snapshot.val();
 
       const newMarkers = Object.values(locationData).map((location, index) => {
@@ -41,7 +42,31 @@ export default function Home() {
 
       setMarkers(newMarkers);
     });
-  }, [customIcon, locationsRef]);
+
+    return () => unsub();
+  }, []);
+
+  // useEffect(() => {
+  //   onValue(locationsRef, (snapshot) => {
+  //     const locationData = snapshot.val();
+
+  //     const newMarkers = Object.values(locationData).map((location, index) => {
+  //       return (
+  //         <>
+  //           <Marker
+  //             key={index}
+  //             position={[location.lat, location.long]}
+  //             icon={customIcon}
+  //           >
+  //             <Popup>{location.name}</Popup>
+  //           </Marker>
+  //         </>
+  //       );
+  //     });
+
+  //     setMarkers(newMarkers);
+  //   });
+  // }, [customIcon, locationsRef]);
 
   return (
     <>

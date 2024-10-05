@@ -9,7 +9,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useRouter } from "next/navigation";
 import firebaseServices from "../../../firebase.js";
 
 // FIXME: useRouter no workie
@@ -39,44 +38,47 @@ const DispatchSidebar = () => {
     orderBy("created_on", "asc")
   ); // Snapshot listener for pending emergencies
 
-  const unsubPending = onSnapshot(pendingQ, (querySnapshot) => {
-    const pendingEntries = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      pendingEntries.push({
-        id: doc.id,
-        callerName: data.caller.name,
-        contact: data.caller.contact,
-        details: data.details,
-        reason: data.reason,
-        address: data.location.address,
+  // TODO: monitor firestore/RTDB reads
+  useEffect(() => {
+    const unsubPending = onSnapshot(pendingQ, (querySnapshot) => {
+      const pendingEntries = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        pendingEntries.push({
+          id: doc.id,
+          callerName: data.caller.name,
+          contact: data.caller.contact,
+          details: data.details,
+          reason: data.reason,
+          address: data.location.address,
+        });
       });
+      setPendingEmergencies(pendingEntries);
     });
-    setPendingEmergencies(pendingEntries);
-  });
 
-  const unsubActive = onSnapshot(activeQ, (querySnapshot) => {
-    const activeEntries = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      activeEntries.push({
-        id: doc.id,
-        callerName: data.caller.name,
-        contact: data.caller.contact,
-        details: data.details,
-        reason: data.reason,
-        address: data.location.address,
+    return () => unsubPending();
+  }, []);
+
+  // TODO: monitor firestore/RTDB reads
+  useEffect(() => {
+    const unsubActive = onSnapshot(activeQ, (querySnapshot) => {
+      const activeEntries = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        activeEntries.push({
+          id: doc.id,
+          callerName: data.caller.name,
+          contact: data.caller.contact,
+          details: data.details,
+          reason: data.reason,
+          address: data.location.address,
+        });
       });
+      setActiveEmergencies(activeEntries);
     });
-    setActiveEmergencies(activeEntries);
-  });
 
-  // useEffect(() => {
-  //   return () => unsubPending();
-  // }, []);
-  // useEffect(() => {
-  //   return () => unsubActive();
-  // }, []);
+    return () => unsubActive();
+  }, []);
 
   const handleOpenDrawer = (type) => {
     setSelectedEmergencyType(type);
