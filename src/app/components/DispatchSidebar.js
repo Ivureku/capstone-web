@@ -72,6 +72,7 @@ const DispatchSidebar = () => {
           details: data.details,
           reason: data.reason,
           address: data.location.address,
+          status: data.status,
         });
       });
       setActiveEmergencies(activeEntries);
@@ -281,6 +282,8 @@ const DispatchSidebar = () => {
           position="bottom"
           open={modalOpen}
           onClose={() => setModalOpen(false)}
+          overlayOpacity="0"
+          overlayBlur="none"
         >
           <Card className="text-black w-full">
             <Card.Header className="flex">
@@ -295,11 +298,20 @@ const DispatchSidebar = () => {
               <p>Details: {selectedEmergency.details}</p>
             </Card.Body>
             <Card.Footer className="flex justify-items-end">
-              <a href={`/assign?request=${selectedEmergency.id}`}>
-                <Button color="green" shadow="base">
-                  Assign
-                </Button>
-              </a>
+              {selectedEmergency.status == 1 && (
+                <a href={`/update?request=${selectedEmergency.id}`}>
+                  <Button className="bg-orange-400" shadow="base">
+                    Update
+                  </Button>
+                </a>
+              )}
+              {selectedEmergency.status == 0 && (
+                <a href={`/assign?request=${selectedEmergency.id}`}>
+                  <Button color="green" shadow="base">
+                    Assign
+                  </Button>
+                </a>
+              )}
             </Card.Footer>
           </Card>
         </Modal>
