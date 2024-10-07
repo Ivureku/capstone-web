@@ -7,6 +7,7 @@ import { onValue, ref } from "firebase/database";
 import firebaseServices from "../../firebase";
 
 import DispatchSidebar from "@/app/components/DispatchSidebar";
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Home() {
@@ -26,19 +27,31 @@ export default function Home() {
     const unsub = onValue(locationsRef, (snapshot) => {
       const locationData = snapshot.val();
 
-      const newMarkers = Object.values(locationData).map((location, index) => {
-        return (
-          <>
-            <Marker
-              key={index}
-              position={[location.lat, location.long]}
-              icon={customIcon}
-            >
-              <Popup>{location.name}</Popup>
-            </Marker>
-          </>
-        );
-      });
+      const newMarkers = Object.values(locationData).map(
+        async (location, index) => {
+          const emergencyRef = doc(
+            firebaseServices.firestoreDB,
+            "emergency_requests",
+            location.emergency_request
+          );
+          const assignedEmergency = (await getDoc(emergencyRef)).data();
+
+          return (
+            <>
+              <Marker
+                key={index}
+                position={[location.lat, location.long]}
+                icon={customIcon}
+              >
+                <Popup>
+                  <p>Caller: {assignedEmergency.caller.name}</p>
+                  <p>Heading to: {assignedEmergency.location.address}</p>
+                </Popup>
+              </Marker>
+            </>
+          );
+        }
+      );
 
       setMarkers(newMarkers);
     });
