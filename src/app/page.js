@@ -29,27 +29,48 @@ export default function Home() {
 
       const newMarkers = Object.values(locationData).map(
         async (location, index) => {
-          const emergencyRef = doc(
-            firebaseServices.firestoreDB,
-            "emergency_requests",
-            location.emergency_request
-          );
-          const assignedEmergency = (await getDoc(emergencyRef)).data();
+          if (location.emergency_request) {
+            const emergencyRef = doc(
+              firebaseServices.firestoreDB,
+              "emergency_requests",
+              location.emergency_request
+            );
+            const assignedEmergency = (await getDoc(emergencyRef)).data();
 
-          return (
-            <>
-              <Marker
-                key={index}
-                position={[location.lat, location.long]}
-                icon={customIcon}
-              >
-                <Popup>
-                  <p>Caller: {assignedEmergency.caller.name}</p>
-                  <p>Heading to: {assignedEmergency.location.address}</p>
-                </Popup>
-              </Marker>
-            </>
-          );
+            return (
+              <>
+                <Marker
+                  key={index}
+                  position={[location.lat, location.long]}
+                  icon={customIcon}
+                >
+                  <Popup>
+                    <p>Caller: {assignedEmergency.caller.name ?? none}</p>
+                    <p>
+                      Heading to: {assignedEmergency.location.address ?? none}
+                    </p>
+                  </Popup>
+                </Marker>
+              </>
+            );
+          }
+
+          // return (
+          //   <>
+          //     <Marker
+          //       key={index}
+          //       position={[location.lat, location.long]}
+          //       icon={customIcon}
+          //     >
+          //       <Popup>
+          //         <p>Caller: {assignedEmergency.caller.name ?? none}</p>
+          //         <p>
+          //           Heading to: {assignedEmergency.location.address ?? none}
+          //         </p>
+          //       </Popup>
+          //     </Marker>
+          //   </>
+          // );
         }
       );
 
