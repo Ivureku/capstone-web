@@ -60,12 +60,9 @@ export default function CreateResponderPage() {
 
       // writes vehicle ID (vehicle plate number) to real-time database
       const responderRTDBRef = ref(firebaseServices.db, `location/${userId}`);
-      // sets default location to 911 command center
       await set(responderRTDBRef, {
         vehicle_id: responderData.vehicle_id,
         emergency_request: "",
-        lat: 7.057510453737061,
-        long: 125.5990871819411,
       });
     } catch (error) {
       alert("Failed to upload responder data");
