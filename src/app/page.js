@@ -45,10 +45,9 @@ export default function Home() {
                   icon={customIcon}
                 >
                   <Popup>
-                    <p>Caller: {assignedEmergency.caller.name ?? none}</p>
-                    <p>
-                      Heading to: {assignedEmergency.location.address ?? none}
-                    </p>
+                    <p className="font-black">{location.vehicle_id}</p>
+                    <p>Assigned to Caller: {assignedEmergency.caller.name}</p>
+                    <p>Heading to: {assignedEmergency.location.address}</p>
                   </Popup>
                 </Marker>
               </>
