@@ -34,7 +34,7 @@ const DispatchSidebar = () => {
 
   const activeQ = query(
     collection(firebaseServices.firestoreDB, "emergency_requests"),
-    where("status", "==", 1), // Assuming status '1' indicates active emergencies
+    where("status", "==", 1),
     orderBy("created_on", "asc")
   ); // Snapshot listener for pending emergencies
 
@@ -51,6 +51,7 @@ const DispatchSidebar = () => {
           details: data.details,
           reason: data.reason,
           address: data.location.address,
+          status: data.status,
         });
       });
       setPendingEmergencies(pendingEntries);
@@ -83,6 +84,7 @@ const DispatchSidebar = () => {
 
   const handleOpenDrawer = (type) => {
     setSelectedEmergencyType(type);
+
     setOpen(true);
   };
 
