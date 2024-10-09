@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@rewind-ui/core";
 import { ref, update } from "firebase/database";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,7 +8,6 @@ import { Suspense } from "react";
 import firebaseServices from "../../../firebase";
 import AsyncResponderMultiSelect from "../components/AsyncResponderMultiSelect";
 import RequestDetailsCard from "../components/RequestDetailsCard";
-import { Button } from "@rewind-ui/core";
 
 export default function AssignResponderPage() {
   const router = useRouter();
@@ -20,8 +20,8 @@ export default function AssignResponderPage() {
 
     console.log(responders);
 
-    if (responders === null || responders.length < 2) {
-      alert("Please select at least two (2) responders");
+    if (responders === null || responders.length < 1) {
+      alert("Please select at least one (1) responders");
       return;
     }
 
